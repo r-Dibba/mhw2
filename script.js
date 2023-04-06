@@ -1,6 +1,6 @@
 /*
 * SELEZIONE RISPOSTA
-* Mantengo una lista contentente tutte le risposte per controllare successivamente la personalità ottenuta
+* Mantengo una lista contentente tutte le risposte e l'id relativo alla domanda per controllare successivamente la personalità ottenuta
 * Quando si sceglie una risposta, considero prima tutte le risposte alla data domanda come 'non scelte' 
 * Successivamente, applico le modifiche specifiche alla risposta scelta
 *
@@ -12,12 +12,12 @@
 const answers = document.querySelectorAll('.choice-grid div');
 let chosenAnswers = [];
 
- /* Funzione che determina la personalità */
-
 function selectAnswer(event){
-    const choice = event.currentTarget;
+    const thisDiv = event.currentTarget;
+    const choice = thisDiv.dataset.choiceId; /* stringa identificativa della personalità scelta */
+    const idx = thisDiv.dataset.questionId; /* ID della domanda */
 
-    for (let box of choice.parentNode.querySelectorAll('div')){ /* Itero fra tutti i <div> della <section> relativa alla domanda, ovvero il contenitore (parent node) del div cliccato */
+    for (let box of thisDiv.parentNode.querySelectorAll('div')){ /* Itero fra tutti i <div> della <section> relativa alla domanda, ovvero il contenitore (parent node) del div cliccato */
         /* Considero tutte le risposte 'non scelte' a priori, aggiornandone lo sfondo e impostando la checkbox unchecekd */
         box.querySelector('.checkbox').classList.remove('hidden');
         box.querySelector('.checked').classList.add('hidden');
@@ -26,25 +26,30 @@ function selectAnswer(event){
     }
 
     /* Aggiornamento della checkbox e del colore di sfondo corrente */
-    const unchecked = choice.querySelector('.checkbox');
-    const checked = choice.querySelector('.checked');
+    const unchecked = thisDiv.querySelector('.checkbox');
+    const checked = thisDiv.querySelector('.checked');
     unchecked.classList.add('hidden');
     checked.classList.remove('hidden');
-    choice.classList.remove('not-chosen');
-    choice.classList.add('chosen');
+    thisDiv.classList.remove('not-chosen');
+    thisDiv.classList.add('chosen');
 
     /* Tolgo (se presenti) altre 'scelte' relative alla stessa domanda (necessario se si decide di scegliere nuovamente una risposta) */
-    for (let i = 0; i < chosenAnswers.length; i++){
-        if (chosenAnswers[i].dataset.questionId === choice.dataset.questionId){
+    let i;
+    for (i = 0; i < chosenAnswers.length; i++){
+
+        if (chosenAnswers[i].id === idx){
             chosenAnswers.splice(i, 1);
-            /* Posso inserire un break in quanto nella lista c'è un solo elemento per ogni questionId */
-            break;
+            break; /* Se l'elemento esiste è unico, non serve iterare ancora */
         }
-        
+    }
+    
+    /* Aggiungo la risposta selezionata alla lista di risposte scelte */
+    const temp = { 
+        id: idx,
+        choice: choice
     }
 
-    /* Aggiungo la risposta selezionata alla lista di risposte scelte */
-    chosenAnswers.push(choice);
+    chosenAnswers.push(temp);
 
     if(chosenAnswers.length === 3){
 
@@ -75,7 +80,11 @@ function getPersonality(){
     const occurrences = {};
     let i;
     for (i = 0; i < chosenAnswers.length; i++){
-        let type = chosenAnswers[i].dataset.choiceId;
+        let type = chosenAnswers[i].choice;
+        /* 
+        * if necessario poichè, se si verifica la prima occorrenza di una personalità, è necessario assegnare 1 al valore a esso associata.
+        * Non si può semplicemente sommare perchè il numero di occorrenze iniziali non è 0, bensì NaN
+        */
         if (occurrences[type] >= 1 )
             occurrences[type] += 1;
         else
@@ -83,7 +92,7 @@ function getPersonality(){
     }
 
     /* Selezione della personalità col massimo numero di occorrenze */
-    let max = chosenAnswers[0].dataset.choiceId;
+    let max = chosenAnswers[0].choice;
     for (let pers in occurrences){
         if (occurrences[pers] > occurrences[max])
             max = pers;
