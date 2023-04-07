@@ -1,20 +1,12 @@
 # mhw2
 
 ## Modifiche per il layout mobile
-Le modifiche al file index.html iniziale per la visualizzazione da dispositivi mobile sono le seguenti:
+Nel file index.html ho aggiunto il tag meta viewport per far sì che il livello di zoom della viewport sia del 100% e la larghezza pari alla larghezza del dispositivo.
 
-1. * Tag meta viewport
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ```
-per impostare il livello di zoom della viewport al 100% e la larghezza pari alla larghezza del dispositivo.
-
-2. * Span visibile da mobile
-```html
-<span id = "menumobile">MHW2</span>
-```
-visibile solo se la larghezza del dispositivo è inferiore ai 700px.
-
+per impostare il livello di zoom della viewport al 100% e la larghezza pari alla larghezza del dispositivo.  
 Per quanto riguarda il foglio di stile, sono state aggiunte due media query:
 ```css
 @media(max-width: 700px){
@@ -24,11 +16,6 @@ Per quanto riguarda il foglio di stile, sono state aggiunte due media query:
 
     header div span{
         display: none;
-    }
-
-    #menumobile{
-        display: flex;
-        font-size: 14px;
     }
 
     .question-name h1{
