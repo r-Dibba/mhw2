@@ -12,24 +12,24 @@
 const answers = document.querySelectorAll('.choice-grid div');
 let chosenAnswers = [];
 
+/* Numero di domande del quiz */
+const questionsAmount = countQuestions();
+
 function selectAnswer(event){
     const thisDiv = event.currentTarget;
+    const checkbox = thisDiv.querySelector('.checkbox');
     const choice = thisDiv.dataset.choiceId; /* stringa identificativa della personalità scelta */
     const idx = thisDiv.dataset.questionId; /* ID della domanda */
 
     for (let box of thisDiv.parentNode.querySelectorAll('div')){ /* Itero fra tutti i <div> della <section> relativa alla domanda, ovvero il contenitore (parent node) del div cliccato */
         /* Considero tutte le risposte 'non scelte' a priori, aggiornandone lo sfondo e impostando la checkbox unchecekd */
-        box.querySelector('.checkbox').classList.remove('hidden');
-        box.querySelector('.checked').classList.add('hidden');
+        box.querySelector('.checkbox').src = "./images/unchecked.png";
         box.classList.remove('chosen');
         box.classList.add('not-chosen');
     }
 
     /* Aggiornamento della checkbox e del colore di sfondo corrente */
-    const unchecked = thisDiv.querySelector('.checkbox');
-    const checked = thisDiv.querySelector('.checked');
-    unchecked.classList.add('hidden');
-    checked.classList.remove('hidden');
+    checkbox.src = "./images/checked.png";
     thisDiv.classList.remove('not-chosen');
     thisDiv.classList.add('chosen');
 
@@ -51,7 +51,7 @@ function selectAnswer(event){
 
     chosenAnswers.push(temp);
 
-    if(chosenAnswers.length === 3){
+    if(chosenAnswers.length === questionsAmount){
 
         getPersonality();
 
@@ -108,8 +108,9 @@ function getPersonality(){
     const text = document.createElement('p');
     text.textContent = RESULTS_MAP[max].contents;
     
-    const button = document.createElement('div');
+    const button = document.createElement('a');
     button.textContent = "Ricomincia il Quiz";
+    button.href = "#";
 
     /* NOTA: sarebbe più appropriato aggiungere degli ID invece che classi */
     container.classList.add('answer');
@@ -131,12 +132,17 @@ function reset(event){
     for (let box of answers){
         box.addEventListener('click', selectAnswer);
         box.classList.remove('chosen', 'not-chosen');
-        box.querySelector('.checked').classList.add('hidden');
-        box.querySelector('.checkbox').classList.remove('hidden');
+        box.querySelector('.checkbox').src = "./images/unchecked.png";
     }
 
     event.currentTarget.parentNode.remove();
 
     chosenAnswers = [];
 
+}
+
+/* Funzione che conta il numero di domande del quiz */
+function countQuestions(){
+    let sections = document.querySelectorAll('.question-name');
+    return(sections.length);
 }
