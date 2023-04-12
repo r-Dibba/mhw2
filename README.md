@@ -49,7 +49,7 @@ const oggetto = {
 ```
 il campo ```id``` serve perchè, in caso di ri-selezione di una risposta, sarà necessario rimuovere la risposta associata alla domanda con lo stesso id (a ogni domanda si può dare una sola risposta)
 Per determinare la personalità, utilizzo una mappa strutturata come segue
-```css
+```js
 const occurrences = {
   key: personalità,
   value: numero_di_occorrenze
