@@ -10,7 +10,7 @@
 */
 
 const answers = document.querySelectorAll('.choice-grid div');
-let chosenAnswers = [];
+const chosenAnswers = [];
 
 /* Numero di domande del quiz */
 const questionsAmount = countQuestions();
@@ -85,10 +85,10 @@ function getPersonality(){
         * if necessario poichè, se si verifica la prima occorrenza di una personalità, è necessario assegnare 1 al valore a esso associata.
         * Non si può semplicemente sommare perchè il numero di occorrenze iniziali non è 0, bensì NaN
         */
-        if (occurrences[type] >= 1 )
-            occurrences[type] += 1;
-        else
+        if (!occurrences[type])
             occurrences[type] = 1;
+        else
+            occurrences[type] += 1;
     }
 
     /* Selezione della personalità col massimo numero di occorrenze */
@@ -110,7 +110,7 @@ function getPersonality(){
     
     const button = document.createElement('a');
     button.textContent = "Ricomincia il Quiz";
-    button.href = "#";
+    button.href = "#"; /* Per tornare in cima alla pagina */
 
     /* NOTA: sarebbe più appropriato aggiungere degli ID invece che classi */
     container.classList.add('answer');
@@ -137,7 +137,7 @@ function reset(event){
 
     event.currentTarget.parentNode.remove();
 
-    chosenAnswers = [];
+    chosenAnswers.splice(0,questionsAmount);
 
 }
 
