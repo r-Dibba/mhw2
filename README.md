@@ -37,9 +37,9 @@ Questa media query è necessaria per cambiare la larghezza delle risposte. Vengo
 ## Implementazione dello script
 Mantengo una lista di risposte selezionate
 ```js
-let chosenAnswers = [];
+const chosenAnswers = [];
 ```
-Non la dichiaro ```const``` in quanto, quando verrà cliccato il bottone di reset, la inizializzo nuovamente vuota.  
+Quando verrà cliccato il bottone di reset, la svuoto utilizzando il metodo ```splice()```    
 Ogni elemento della lista è un oggetto strutturato in questo modo
 ```js
 const oggetto = {
@@ -55,4 +55,4 @@ const occurrences = {
   value: numero_di_occorrenze
 }
 ```
-Itero dunque la lista di risposte scelte e incremento opportunamente il numero di occorrenze nella mappa. Inizialmente pongo la personalità col massimo numero di occorrenze al primo elemento della lista (se il numero di occorrenze è uguale, verrà visualizzata la prima personalità scelta), poi ricerco nella mappa quella con numero di occorrenze maggiore (banale ricerca del massimo)
+Itero dunque la lista di risposte scelte e incremento opportunamente il numero di occorrenze nella mappa. Inizialmente pongo la personalità col massimo numero di occorrenze al primo elemento della lista (se il numero di occorrenze è uguale, verrà visualizzata la prima personalità scelta), poi ricerco nella mappa quella con numero di occorrenze maggiore (ricerca del massimo)
