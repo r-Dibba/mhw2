@@ -59,7 +59,7 @@
 
 /* Selettori per impostare lo stile lo stile del box contentente la personalità ottenuta */
 
-.answer{
+#answer{
     background-color: blanchedalmond;
     width: 100%;
     padding: 20px;
@@ -67,15 +67,15 @@
     box-sizing: border-box;
 }
 
-.answerTitle{
+#answerTitle{
     margin: 0px;
 }
 
-.answeDesc{
+#answeDesc{
     margin: 18px 0px;
 }
 
-.resetButton{
+#resetButton{
     height: 50px;
     background-color: #cecece;
 
@@ -87,10 +87,10 @@
     color: black;
 }
 
-.resetButton:hover{
+#resetButton:hover{
     background-color: #e0e0e0;
 }
 
-.resetButton:visited{
+#resetButton:visited{
     color: black;
 }
