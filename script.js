@@ -113,10 +113,10 @@ function getPersonality(){
     button.href = "#"; /* Per tornare in cima alla pagina */
 
     /* NOTA: sarebbe più appropriato aggiungere degli ID invece che classi */
-    container.classList.add('answer');
-    title.classList.add('answerTitle');
-    text.classList.add('answerDesc');
-    button.classList.add('resetButton');
+    container.id = 'answer';
+    title.id = 'answerTitle';
+    text.id = 'answerDesc';
+    button.id = 'resetButton';
     
     article.appendChild(container);
     container.appendChild(title);
